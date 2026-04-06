@@ -1,5 +1,5 @@
 {
-    "name": "ISP-Master-Brain",
+    "name": "My-Linux-Server",
     "image": "mcr.microsoft.com/devcontainers/python:3.11",
     "features": {
         "ghcr.io/devcontainers/features/desktop-lite:1": {
@@ -7,5 +7,13 @@
         },
         "ghcr.io/devcontainers/features/node:1": {}
     },
-    "postCreateCommand": "sudo apt update && sudo apt install -y nmap snmp python3-pip && pip install routeros-api requests"
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-ceintl.vscode-language-pack-bn"
+            ]
+        }
+    },
+    "postCreateCommand": "sudo apt update && sudo apt install -y htop curl wget neofetch"
 }
