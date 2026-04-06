@@ -1,19 +1,52 @@
 {
-    "name": "My-Linux-Server",
+    "name": "ISP-Master-Brain-Server",
     "image": "mcr.microsoft.com/devcontainers/python:3.11",
+    
+    // ১. প্রয়োজনীয় ফিচার এবং ডেস্কটপ ইনস্টল করা
     "features": {
         "ghcr.io/devcontainers/features/desktop-lite:1": {
             "version": "latest"
         },
-        "ghcr.io/devcontainers/features/node:1": {}
+        "ghcr.io/devcontainers/features/common-utils:1": {
+            "installZsh": true,
+            "configureZshOhMyZsh": true
+        },
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "lts"
+        }
     },
+
+    // ২. ভিএম তৈরির সাথে সাথেই প্রয়োজনীয় সফটওয়্যার ইনস্টল করা
+    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y nmap snmp net-tools iputils-ping traceroute htop curl wget neofetch && pip install routeros-api requests flask loguru",
+
+    // ৩. ভিএস কোড এক্সটেনশন ও সেটিংস কনফিগার করা
     "customizations": {
         "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "zsh",
+                "python.defaultInterpreterPath": "/usr/local/bin/python"
+            },
             "extensions": [
                 "ms-python.python",
-                "ms-ceintl.vscode-language-pack-bn"
+                "ms-python.vscode-pylance",
+                "ms-ceintl.vscode-language-pack-bn",
+                "esbenp.prettier-vscode"
             ]
         }
     },
-    "postCreateCommand": "sudo apt update && sudo apt install -y htop curl wget neofetch"
+
+    // ৪. প্রয়োজনীয় পোর্টগুলো অটোমেটিক ওপেন করা
+    "forwardPorts": [6080, 5000, 8080],
+    "portsAttributes": {
+        "6080": {
+            "label": "Desktop GUI",
+            "onAutoForward": "notify"
+        },
+        "5000": {
+            "label": "API Backend",
+            "onAutoForward": "silent"
+        }
+    },
+
+    "remoteUser": "vscode"
 }
