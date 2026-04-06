@@ -1,0 +1,11 @@
+{
+    "name": "ISP-Master-Brain",
+    "image": "mcr.microsoft.com/devcontainers/python:3.11",
+    "features": {
+        "ghcr.io/devcontainers/features/desktop-lite:1": {
+            "version": "latest"
+        },
+        "ghcr.io/devcontainers/features/node:1": {}
+    },
+    "postCreateCommand": "sudo apt update && sudo apt install -y nmap snmp python3-pip && pip install routeros-api requests"
+}
